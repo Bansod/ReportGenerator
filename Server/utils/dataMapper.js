@@ -1,6 +1,5 @@
 function getValueByPath(obj, path) {
   return path.split('.').reduce((acc, part) => {
-    // Handle array index like exercises[0]
     const match = part.match(/(\w+)\[(\d+)\]/);
     if (match) {
       const [, key, index] = match;
