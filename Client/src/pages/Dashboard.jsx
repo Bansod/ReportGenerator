@@ -9,15 +9,9 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-      <p>Welcome! You are logged in.</p>
-      <button
-        className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
-        onClick={handleLogout}
-      >
-        Logout
-      </button>
+    <div className="p-4 bg-gray-900 h-full text-gray-200 flex items-center flex-col py-5">
+      <h1 className="text-3xl font-bold mb-4">Welcome!</h1>
+      <p>Please head over to the "generate PDF" section to generate your report</p>
     </div>
   );
 }

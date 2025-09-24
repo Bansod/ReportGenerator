@@ -69,7 +69,7 @@ export default function Login() {
           <span>Don't have an account?</span>
           <Link
             to="/signup"
-            className="text-green-400 hover:text-green-300 font-medium cursor-pointer"
+            className="text-green-400 hover:underline font-medium cursor-pointer"
           >
             Sign up
           </Link>

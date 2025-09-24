@@ -35,13 +35,13 @@ export default function Topbar() {
           <>
             <Link
               to="/signup"
-              className="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600 transition"
+              className="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600 transition cursor-pointer"
             >
               Signup
             </Link>
             <Link
               to="/login"
-              className="px-4 py-2 bg-green-500 rounded hover:bg-green-600 transition"
+              className="px-4 py-2 bg-green-500 rounded hover:bg-green-600 transition cursor-pointer"
             >
               Login
             </Link>
@@ -50,13 +50,13 @@ export default function Topbar() {
           <>
             <Link
               to="/generate-report"
-              className="px-4 py-2 bg-yellow-500 rounded hover:bg-yellow-600 transition"
+              className="px-4 py-2 bg-yellow-500 rounded hover:bg-yellow-600 transition cursor-pointer"
             >
               Generate PDF
             </Link>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 bg-red-500 rounded hover:bg-red-600 transition"
+              className="px-4 py-2 bg-red-500 rounded hover:bg-red-600 transition cursor-pointer"
             >
               Logout
             </button>
