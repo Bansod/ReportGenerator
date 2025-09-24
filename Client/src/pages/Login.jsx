@@ -17,6 +17,7 @@ export default function Login() {
       const data = await res.json();
       if (data.token) {
         localStorage.setItem("accessToken", data.token);
+        window.dispatchEvent(new Event("storage"));
         navigate("/dashboard");
       }
       setMessage(data.message);
@@ -47,7 +48,7 @@ export default function Login() {
         />
 
         <button
-          className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg font-semibold transition duration-200"
+          className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg font-semibold transition duration-200 cursor-pointer"
           onClick={handleLogin}
         >
           Login
@@ -68,7 +69,7 @@ export default function Login() {
           <span>Don't have an account?</span>
           <Link
             to="/signup"
-            className="text-green-400 hover:text-green-300 font-medium"
+            className="text-green-400 hover:text-green-300 font-medium cursor-pointer"
           >
             Sign up
           </Link>

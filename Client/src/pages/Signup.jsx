@@ -48,7 +48,7 @@ export default function Signup() {
         />
 
         <button
-          className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-3 rounded-lg w-full transition"
+          className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-3 rounded-lg w-full transition cursor-pointer"
           onClick={handleSignup}
         >
           Signup
@@ -62,7 +62,7 @@ export default function Signup() {
           <span>Already have an account?</span>
           <button
             onClick={() => navigate("/login")}
-            className="text-blue-400 hover:underline font-medium"
+            className="text-blue-400 hover:underline font-medium cursor-pointer"
           >
             Login
           </button>

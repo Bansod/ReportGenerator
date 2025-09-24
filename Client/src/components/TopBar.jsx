@@ -6,19 +6,27 @@ export default function Topbar() {
   const navigate = useNavigate();
 
   useEffect(() => {
+  const checkLogin = () => {
     const token = localStorage.getItem("accessToken");
     setIsLoggedIn(!!token);
-  }, []);
+  };
+
+  checkLogin();
+
+  window.addEventListener("storage", checkLogin);
+  return () => window.removeEventListener("storage", checkLogin);
+}, []);
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
+    window.dispatchEvent(new Event("storage"));
     setIsLoggedIn(false);
     navigate("/login");
   };
 
   return (
     <div className="w-full h-full bg-gray-800 text-white px-6 py-3 flex justify-between items-center shadow-md">
-      <h1 className="text-xl font-bold cursor-pointer" onClick={() => navigate("/")}>
+      <h1 className="text-xl font-bold cursor-pointer" onClick={() => navigate("/dashboard")}>
         Watch Your Health 
       </h1>
 
