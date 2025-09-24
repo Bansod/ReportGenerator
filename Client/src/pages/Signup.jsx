@@ -17,7 +17,6 @@ export default function Signup() {
       const data = await res.json();
       setMessage(data.message);
       if (res.ok) {
-        // Redirect to login after successful signup
         setTimeout(() => navigate("/login"), 1500);
       }
     } catch (err) {
