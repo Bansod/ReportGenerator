@@ -1,8 +1,24 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const fs = require("fs");
+const path = require("path");
 require("dotenv").config();
 
-const users = [];
+const usersFile = path.join(__dirname, "users.json");
+let users = [];
+
+if (fs.existsSync(usersFile)) {
+  try {
+    users = JSON.parse(fs.readFileSync(usersFile, "utf-8"));
+  } catch (err) {
+    console.error("Error reading users file:", err.message);
+    users = [];
+  }
+}
+
+const saveUsers = () => {
+  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+};
 
 exports.signup = async (req, res) => {
   try {
@@ -20,6 +36,8 @@ exports.signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = { email, password: hashedPassword };
     users.push(newUser);
+
+    saveUsers();
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (err) {

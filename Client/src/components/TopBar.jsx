@@ -52,7 +52,7 @@ export default function Topbar() {
               to="/generate-report"
               className="px-4 py-2 bg-yellow-500 rounded hover:bg-yellow-600 transition cursor-pointer"
             >
-              Generate PDF
+              Reports
             </Link>
             <button
               onClick={handleLogout}
