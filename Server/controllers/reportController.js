@@ -1,7 +1,7 @@
 const { assessments } = require("../data/data");
 const { assessmentConfig } = require("../config/assessmentConfig");
 const { mapDataToConfig } = require("../utils/dataMapper");
-const { generatePDF } = require("../utils/pdfGenerator");
+const { generatePDFBuffer } = require("../utils/pdfGenerator");
 
 async function generateReport(req, res) {
   const { session_id } = req.body;
@@ -15,8 +15,14 @@ async function generateReport(req, res) {
   const mappedData = mapDataToConfig(data, config);
 
   try {
-    const pdfPath = await generatePDF(mappedData, session_id);
-    return res.json({ success: true, pdfPath });
+    const pdfBuffer = await generatePDFBuffer(mappedData, session_id);
+
+    res.set({
+      "Content-Type": "application/pdf",
+      "Content-Disposition": `inline; filename=${session_id}.pdf`,
+    });
+
+    return res.send(pdfBuffer);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Failed to generate PDF" });

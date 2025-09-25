@@ -4,6 +4,7 @@ export default function ReportGenerator() {
   const [sessionId, setSessionId] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pdfBlobUrl, setPdfBlobUrl] = useState("");
 
   const handleGenerate = async () => {
     if (!sessionId) {
@@ -13,33 +14,30 @@ export default function ReportGenerator() {
 
     setLoading(true);
     setMessage("");
+    setPdfBlobUrl("");
 
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await fetch(`http://localhost:5000/api/report/generate-report`, {
+      const res = await fetch("http://localhost:5000/api/report/generate-report", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({ session_id: sessionId }),
       });
 
-      const blob = await res.blob();
-
-      if (blob.type === "application/json") {
-        const data = await blob.text();
-        setMessage(JSON.parse(data).message || "Error generating report");
-      } else {
-        const url = window.URL.createObjectURL(new Blob([blob]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", `${sessionId}_report.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        link.parentNode.removeChild(link);
-        setMessage("Report generated successfully!");
+      if (!res.ok) {
+        const error = await res.json();
+        setMessage(error.error || "Error generating report");
+        return;
       }
+
+      // Convert response to Blob
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      setPdfBlobUrl(url);
+      setMessage("Report generated successfully!");
     } catch (err) {
       console.error(err);
       setMessage("Server error");
@@ -68,7 +66,18 @@ export default function ReportGenerator() {
         >
           {loading ? "Generating..." : "Generate PDF"}
         </button>
+
         {message && <p className="text-center text-gray-300">{message}</p>}
+
+        {pdfBlobUrl && (
+          <a
+            href={pdfBlobUrl}
+            download={`${sessionId}.pdf`}
+            className="w-full text-center px-4 py-2 rounded font-semibold text-white bg-green-600 hover:bg-green-500 transition"
+          >
+            Download Report
+          </a>
+        )}
       </div>
     </div>
   );
